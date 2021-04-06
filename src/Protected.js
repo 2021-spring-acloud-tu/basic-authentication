@@ -9,17 +9,19 @@ const Protected = ({history}) => {
 
   useEffect(
     () => {
-        Auth.currentAuthenticatedUser()
-            .then(
-                () => {
-                    console.log("User was authenticated ! ! !");
-                }
-            )
-            .catch(
-                () => {
-                    history.push('/profile');
-                }
-            );
+
+      const checkUser = async () => {
+        try{
+          await Auth.currentAuthenticatedUser();
+          console.log("User was authenticated ! ! !");
+        }
+        catch (err) {
+          console.error(err);
+          history.push('/profile');
+        }
+      };
+      
+      checkUser();
     }
     , []
   );
